@@ -1,0 +1,36 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+./MyFirstApp/node_modules/
+
+# Expo
+./MyFirstApp/.expo/
+./MyFirstApp/dist/
+./MyFirstApp/web-build/
+./MyFirstApp/expo-env.d.ts
+
+# Native
+./MyFirstApp/*.orig.*
+./MyFirstApp/*.jks
+./MyFirstApp/*.p8
+./MyFirstApp/*.p12
+./MyFirstApp/*.key
+./MyFirstApp/*.mobileprovision
+
+# Metro
+./MyFirstApp/.metro-health-check*
+
+# debug
+./MyFirstApp/npm-debug.*
+./MyFirstApp/yarn-debug.*
+./MyFirstApp/yarn-error.*
+
+# macOS
+./MyFirstApp/.DS_Store
+./MyFirstApp/*.pem
+
+# local env files
+./MyFirstApp/.env*.local
+
+# typescript
+*.tsbuildinfo
