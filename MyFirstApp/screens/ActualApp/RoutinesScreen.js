@@ -1,65 +1,114 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import colors from '../../colors';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import colors from '../../colors';
+import { ref, get } from 'firebase/database';
+import { auth, database } from '../../firebaseConfig';
 
-const PlusButton = ({ onPress }) => (
-  <TouchableOpacity style={styles.plusButton} onPress={onPress}>
-    <Text style={styles.plusButtonText}>+</Text>
+const RoutineCard = ({ name, onPress }) => (
+  <TouchableOpacity style={styles.routineCard} onPress={onPress}>
+    <Text style={styles.cardTitle}>{name}</Text>
   </TouchableOpacity>
 );
 
-const RoutinesScreen = ({ navigation }) => { // Accept navigation prop
+const RoutinesScreen = ({ navigation }) => {
+  const [routines, setRoutines] = useState([]);
+
+  useEffect(() => {
+    const fetchRoutines = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const routinesRef = ref(database, `users/${user.uid}/routines`);
+      const snapshot = await get(routinesRef);
+
+      if (snapshot.exists()) {
+        setRoutines(Object.keys(snapshot.val()));
+      }
+    };
+
+    fetchRoutines();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Routines</Text>
-      <Text style={styles.text}>This is the Routines page.</Text>
 
-      {/* Plus Button Navigates to NewRoutine */}
-      <PlusButton onPress={() => navigation.navigate('NewRoutine')} />
+      <FlatList
+        data={routines}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <RoutineCard name={item} onPress={() => navigation.navigate('RoutineDetails', { routineName: item })} />
+        )}
+        contentContainerStyle={styles.listContainer}
+      />
+
+      <TouchableOpacity style={styles.plusButton} onPress={() => navigation.navigate('NewRoutine')}>
+        <Text style={styles.plusButtonText}>+</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    backgroundColor: colors.background 
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: colors.background,
+    paddingHorizontal: 20,
   },
-  title: { 
-    fontSize: 24, 
-    fontWeight: 'bold', 
-    color: colors.primary 
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: colors.primary,
+    marginVertical: 20,
   },
-  text: { 
-    fontSize: 18, 
-    color: '#666', 
-    marginTop: 0,
+  listContainer: {
+    paddingBottom: 80, // Prevents overlapping with the button
+    alignItems: 'center', // Ensures cards are centered
   },
-  plusButton: { 
-    backgroundColor: colors.primary, 
-    width: 40, 
-    height: 40, 
-    borderRadius: 30, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    position: 'absolute', 
-    bottom: 100, 
-    right: 20, 
-    elevation: 5, 
-    shadowColor: '#000', 
+  routineCard: {
+    padding: 15,
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    marginVertical: 8,
+    width: 350, // Ensures all cards have the same width
   },
-  plusButtonText: { 
-    color: '#fff', 
-    fontSize: 25, 
-    fontWeight: 'bold', 
-    marginBottom: 2
-  }
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.white || '#333',
+    textAlign: 'center',
+  },
+  plusButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 30,
+    width: 60,
+    height: 60,
+    backgroundColor: colors.primary,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+    marginBottom: 50,
+  },
+  plusButtonText: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
 });
+
 
 export default RoutinesScreen;

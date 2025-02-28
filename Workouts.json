@@ -1,0 +1,10 @@
+{
+    "exercises": {
+      "exercise1": { "name": "Bench Press", "category": "Chest" },
+      "exercise2": { "name": "Deadlift", "category": "Back" },
+      "exercise3": { "name": "Squat", "category": "Legs" },
+      "exercise4": { "name": "Overhead Press", "category": "Shoulders" },
+      "exercise5": { "name": "Bicep Curl", "category": "Arms" }
+    }
+  }
+  
