@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../colors';
 import { ref, get, set } from 'firebase/database';
 import { auth, database } from '../../../firebaseConfig';
 
-const WorkoutNameCard = ({ title, category, isSelected, onPress }) => (
+const WorkoutNameCard = ({ title, category, type, isSelected, onPress }) => (
   <TouchableOpacity
     style={[styles.workoutNameCard, isSelected && styles.selectedCard]}
     onPress={onPress}
   >
     <Text style={[styles.cardTitle, isSelected && styles.selectedText]}>{title}</Text>
-    <Text style={[styles.cardValue, isSelected && styles.selectedText]}>{category}</Text>
+    <Text style={[styles.cardValue, isSelected && styles.selectedText]}>{category} | {type}</Text>
   </TouchableOpacity>
 );
 
@@ -27,12 +27,21 @@ const NewRoutine = ({ navigation }) => {
 
       if (snapshot.exists()) {
         const data = snapshot.val();
-        const workoutsArray = Object.keys(data).map(key => ({
-          id: key,
-          title: data[key].name,
-          category: data[key].category
-        }));
-        setWorkouts(workoutsArray);
+        let workoutArray = [];
+
+        // Loop through each category (chest, back, legs, etc.)
+        Object.keys(data).forEach(category => {
+          Object.keys(data[category]).forEach(exerciseId => {
+            workoutArray.push({
+              id: exerciseId,
+              title: data[category][exerciseId].name,
+              category: category,
+              type: data[category][exerciseId].type
+            });
+          });
+        });
+
+        setWorkouts(workoutArray);
       }
     };
 
@@ -64,7 +73,7 @@ const NewRoutine = ({ navigation }) => {
 
     await set(routineRef, selectedRoutine);
 
-    navigation.navigate('App', { screen: 'Routines' });
+    navigation.navigate('RoutineSetup', { routineName, exercises: selectedRoutine });
   };
 
   return (
@@ -77,17 +86,18 @@ const NewRoutine = ({ navigation }) => {
         onChangeText={setRoutineName}
       />
 
-      <View style={styles.cardContainer}>
+      <ScrollView style={styles.scrollContainer}>
         {workouts.map(workout => (
           <WorkoutNameCard
             key={workout.id}
             title={workout.title}
             category={workout.category}
+            type={workout.type}
             isSelected={selectedWorkouts.includes(workout.id)}
             onPress={() => toggleWorkoutSelection(workout.id)}
           />
         ))}
-      </View>
+      </ScrollView>
 
       <TouchableOpacity style={styles.button} onPress={handleSaveRoutine}>
         <Text style={styles.buttonText}>Save Routine</Text>
@@ -100,10 +110,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
+    paddingTop: 20,
+  },
+  scrollContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
   },
   cardContainer: {
-    width: '80%',
+    width: '90%',
     marginTop: 20,
   },
   workoutNameCard: {
@@ -114,6 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 15,
     alignItems: 'center',
+    backgroundColor: colors.white || '#fff',
   },
   selectedCard: {
     backgroundColor: colors.primary,
@@ -126,11 +142,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: colors.primary,
-    marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   RoutineName: {
-    width: '80%',
+    width: '90%',
     padding: 12,
     borderWidth: 2,
     borderColor: colors.primary,
@@ -145,6 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '80%',
     alignItems: 'center',
+    marginBottom: 20,
   },
   buttonText: {
     color: '#fff',

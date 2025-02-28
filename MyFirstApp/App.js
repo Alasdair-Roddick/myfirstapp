@@ -1,3 +1,6 @@
+import 'react-native-reanimated'; // ADD THIS LINE AT THE VERY TOP
+
+
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from './colors'; 
 import * as Font from "expo-font";
 
+
 // Import screens
 import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -19,14 +23,17 @@ import HomeScreen from './screens/ActualApp/HomeScreen';
 import RoutinesScreen from './screens/ActualApp/RoutinesScreen';
 import SettingsScreen from './screens/ActualApp/SettingsScreen';
 import NewRoutine from './screens/ActualApp/RoutinePages/NewRoutine';
+import RoutineSetupScreen from './screens/ActualApp/RoutinePages/RoutineSetupScreen';
+import RoutineDetails from './screens/ActualApp/RoutinePages/RoutineDetails';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const loadFonts = async () => {
   await Font.loadAsync({
-    Montserrat: require("./assets/fonts/Montserrat-VariableFont_wght.ttf"),
-    Poppins: require("./assets/fonts/Poppins-Bold.ttf"),
+    'Montserrat': require('./assets/fonts/Montserrat-VariableFont_wght.ttf'), // Ensure these are correct
+    'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
   });
 };
 
@@ -101,8 +108,18 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="App" component={BottomTabs} options={{ headerShown: false }} />
+        <Stack.Screen 
+  name="App" 
+  component={BottomTabs} 
+  options={{ 
+    headerShown: false,
+    gestureEnabled: false // Disable swipe back gesture
+  }} 
+/>
+
         <Stack.Screen name="NewRoutine" component={NewRoutine} options={{ headerShown: false }} />
+        <Stack.Screen name="RoutineSetup" component={RoutineSetupScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="RoutineDetails" component={RoutineDetails} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

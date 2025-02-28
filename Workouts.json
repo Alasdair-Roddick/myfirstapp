@@ -1,10 +1,79 @@
 {
-    "exercises": {
-      "exercise1": { "name": "Bench Press", "category": "Chest" },
-      "exercise2": { "name": "Deadlift", "category": "Back" },
-      "exercise3": { "name": "Squat", "category": "Legs" },
-      "exercise4": { "name": "Overhead Press", "category": "Shoulders" },
-      "exercise5": { "name": "Bicep Curl", "category": "Arms" }
+  "exercises": {
+    "chest": {
+      "exercise1": { "name": "Bench Press", "type": "Barbell" },
+      "exercise2": { "name": "Incline Bench Press", "type": "Barbell" },
+      "exercise3": { "name": "Decline Bench Press", "type": "Barbell" },
+      "exercise4": { "name": "Dumbbell Bench Press", "type": "Dumbbell" },
+      "exercise5": { "name": "Incline Dumbbell Press", "type": "Dumbbell" },
+      "exercise6": { "name": "Decline Dumbbell Press", "type": "Dumbbell" },
+      "exercise7": { "name": "Chest Fly", "type": "Machine" },
+      "exercise8": { "name": "Cable Crossover", "type": "Cable" },
+      "exercise9": { "name": "Pec Deck Machine", "type": "Machine" },
+      "exercise10": { "name": "Push-Up", "type": "Bodyweight" }
+    },
+    "back": {
+      "exercise11": { "name": "Deadlift", "type": "Barbell" },
+      "exercise12": { "name": "Sumo Deadlift", "type": "Barbell" },
+      "exercise13": { "name": "Romanian Deadlift", "type": "Barbell" },
+      "exercise14": { "name": "Pull-Up", "type": "Bodyweight" },
+      "exercise15": { "name": "Lat Pulldown", "type": "Machine" },
+      "exercise16": { "name": "Seated Cable Row", "type": "Cable" },
+      "exercise17": { "name": "Bent-Over Row", "type": "Barbell" },
+      "exercise18": { "name": "Dumbbell Row", "type": "Dumbbell" },
+      "exercise19": { "name": "T-Bar Row", "type": "Machine" },
+      "exercise20": { "name": "Face Pull", "type": "Cable" }
+    },
+    "legs": {
+      "exercise21": { "name": "Squat", "type": "Barbell" },
+      "exercise22": { "name": "Front Squat", "type": "Barbell" },
+      "exercise23": { "name": "Hack Squat", "type": "Machine" },
+      "exercise24": { "name": "Leg Press", "type": "Machine" },
+      "exercise25": { "name": "Lunges", "type": "Dumbbell" },
+      "exercise26": { "name": "Bulgarian Split Squat", "type": "Dumbbell" },
+      "exercise27": { "name": "Leg Extension", "type": "Machine" },
+      "exercise28": { "name": "Leg Curl", "type": "Machine" },
+      "exercise29": { "name": "Standing Calf Raise", "type": "Machine" },
+      "exercise30": { "name": "Seated Calf Raise", "type": "Machine" }
+    },
+    "shoulders": {
+      "exercise31": { "name": "Overhead Press", "type": "Barbell" },
+      "exercise32": { "name": "Dumbbell Shoulder Press", "type": "Dumbbell" },
+      "exercise33": { "name": "Arnold Press", "type": "Dumbbell" },
+      "exercise34": { "name": "Lateral Raise", "type": "Dumbbell" },
+      "exercise35": { "name": "Cable Lateral Raise", "type": "Cable" },
+      "exercise36": { "name": "Front Raise", "type": "Dumbbell" },
+      "exercise37": { "name": "Reverse Pec Deck", "type": "Machine" },
+      "exercise38": { "name": "Face Pull", "type": "Cable" }
+    },
+    "arms": {
+      "exercise39": { "name": "Bicep Curl", "type": "Dumbbell" },
+      "exercise40": { "name": "Barbell Curl", "type": "Barbell" },
+      "exercise41": { "name": "Hammer Curl", "type": "Dumbbell" },
+      "exercise42": { "name": "Preacher Curl", "type": "Machine" },
+      "exercise43": { "name": "Cable Curl", "type": "Cable" },
+      "exercise44": { "name": "Tricep Extension", "type": "Cable" },
+      "exercise45": { "name": "Close-Grip Bench Press", "type": "Barbell" },
+      "exercise46": { "name": "Overhead Tricep Extension", "type": "Dumbbell" },
+      "exercise47": { "name": "Dips", "type": "Bodyweight" }
+    },
+    "abs": {
+      "exercise48": { "name": "Crunch", "type": "Bodyweight" },
+      "exercise49": { "name": "Hanging Leg Raise", "type": "Bodyweight" },
+      "exercise50": { "name": "Cable Crunch", "type": "Cable" },
+      "exercise51": { "name": "Ab Wheel Rollout", "type": "Bodyweight" },
+      "exercise52": { "name": "Plank", "type": "Bodyweight" },
+      "exercise53": { "name": "Russian Twists", "type": "Bodyweight" },
+      "exercise54": { "name": "Decline Sit-Up", "type": "Bodyweight" },
+      "exercise55": { "name": "Hanging Knee Raises", "type": "Bodyweight" }
+    },
+    "cardio": {
+      "exercise56": { "name": "Running", "type": "Treadmill" },
+      "exercise57": { "name": "Cycling", "type": "Bike" },
+      "exercise58": { "name": "Rowing", "type": "Rowing Machine" },
+      "exercise59": { "name": "Jump Rope", "type": "Bodyweight" },
+      "exercise60": { "name": "Elliptical", "type": "Machine" },
+      "exercise61": { "name": "Stair Climber", "type": "Machine" }
     }
   }
-  
+}
