@@ -9,6 +9,8 @@ const colors = {
   buttonText: "#FFFFFF",
   borderColor: "#572C57",
   shadowColor: "#000000",
+  cardBackground: "#FFFFFF",
+  highlight: "#8a5fd2",
   
   
   // Fonts

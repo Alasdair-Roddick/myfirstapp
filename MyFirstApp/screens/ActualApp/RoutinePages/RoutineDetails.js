@@ -74,24 +74,25 @@ const RoutineDetails = ({ route, navigation }) => {
 
   useEffect(() => {
     const fetchRoutine = async () => {
-      const user = auth.currentUser;
-      if (!user) return;
-  
-      const routineRef = ref(database, `users/${user.uid}/routines/${routineName}`);
-      const snapshot = await get(routineRef);
-  
-      if (snapshot.exists()) {
-        const fetchedExercises = Object.values(snapshot.val()) || [];
-        // Ensure every exercise has a sets array
-        const exercisesWithSets = fetchedExercises.map(ex => ({
-          ...ex,
-          sets: ex.sets || [] // Default to empty array if sets is undefined
-        }));
-        setExercises(exercisesWithSets);
-      } else {
-        setExercises([]); // Prevent null state
-      }
-    };
+        const user = auth.currentUser;
+        if (!user) return;
+      
+        const routineRef = ref(database, `users/${user.uid}/routines/${routineName}`);
+        const snapshot = await get(routineRef);
+      
+        if (snapshot.exists()) {
+          const fetchedExercises = Object.values(snapshot.val()) || [];
+          const exercisesWithSets = fetchedExercises.map((ex, index) => ({
+            ...ex,
+            id: ex.id || `exercise-${index}`, // ✅ Ensure each exercise has a unique ID
+            sets: ex.sets || [] 
+          }));
+          setExercises(exercisesWithSets);
+        } else {
+          setExercises([]);
+        }
+      };
+      
   
     fetchRoutine();
   }, []);
@@ -176,9 +177,9 @@ const RoutineDetails = ({ route, navigation }) => {
       </View>
 
       {exercises.length > 0 ? (
-  exercises.map((exercise) => (
+  exercises.map((exercise, index) => (
     <ExerciseCard
-      key={exercise.id}
+      key={exercise.id || `exercise-${index}`} // ✅ Ensure a unique key
       exercise={exercise}
       expanded={expandedExercise === exercise.id}
       toggleExpand={() => toggleExpand(exercise.id)}
@@ -194,14 +195,18 @@ const RoutineDetails = ({ route, navigation }) => {
 
 
 
+
       {/* Save & Start Workout */}
       <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.startButton} onPress={() => Alert.alert("Workout Started!")}>
-        <Text style={styles.startButtonText}>Start Workout</Text>
-      </TouchableOpacity>
+      <TouchableOpacity
+  style={styles.startButton}
+  onPress={() => navigation.navigate('Countdown', { routineName, exercises })}>
+  <Text style={styles.startButtonText}>Start Workout</Text>
+</TouchableOpacity>
+
     </SafeAreaView>
   );
 };

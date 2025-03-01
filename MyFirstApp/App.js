@@ -25,6 +25,8 @@ import SettingsScreen from './screens/ActualApp/SettingsScreen';
 import NewRoutine from './screens/ActualApp/RoutinePages/NewRoutine';
 import RoutineSetupScreen from './screens/ActualApp/RoutinePages/RoutineSetupScreen';
 import RoutineDetails from './screens/ActualApp/RoutinePages/RoutineDetails';
+import CountdownScreen from './screens/ActualApp/CountdownScreen';
+import WorkoutSessionScreen from './screens/ActualApp/WorkoutSessionScreen';
 
 
 const Stack = createStackNavigator();
@@ -120,6 +122,9 @@ export default function App() {
         <Stack.Screen name="NewRoutine" component={NewRoutine} options={{ headerShown: false }} />
         <Stack.Screen name="RoutineSetup" component={RoutineSetupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RoutineDetails" component={RoutineDetails} options={{ headerShown: false }} />
+        <Stack.Screen name="Countdown" component={CountdownScreen} options={{ headerShown: false }} />
+<Stack.Screen name="WorkoutSession" component={WorkoutSessionScreen} options={{ headerShown: false }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
