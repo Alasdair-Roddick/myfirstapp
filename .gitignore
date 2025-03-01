@@ -34,3 +34,5 @@
 
 # typescript
 *.tsbuildinfo
+
+./MyFirstApp/node_modules

@@ -20,6 +20,8 @@ def main():
     directories = ["./MyFirstApp/screens", "./MyFirstApp/components"]
     app_file = "./MyFirstApp/App.js"
     other_app_file = "./MyFirstApp/firebaseConfig.js"
+    other_other_app_file = "./MyFirstApp/metro.config.js"
+    other_other_other_app_file = "./MyFirstApp/babel.config.js"
 
     js_files = []
     for directory in directories:
@@ -34,6 +36,10 @@ def main():
     if os.path.exists(other_app_file):
         app_content = read_file_content(other_app_file)
         clipboard_content += format_file_content(other_app_file, app_content) + "\n"
+
+    if os.path.exists(other_other_app_file):
+        app_content = read_file_content(other_other_app_file)
+        clipboard_content += format_file_content(other_other_app_file, app_content) + "\n"
     
     for file_path in js_files:
         content = read_file_content(file_path)
